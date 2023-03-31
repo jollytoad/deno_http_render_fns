@@ -1,0 +1,6 @@
+{
+  "imports": {
+    "$jsx/": "./jsx_stream/",
+    "$jsx/jsx-runtime": "./jsx_stream/jsx-runtime.ts"
+  }
+}
