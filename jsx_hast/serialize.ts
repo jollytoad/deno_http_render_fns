@@ -1,1 +1,1 @@
-export { toHtml as renderToString } from "hast-util-to-html";
+export { toHtml as renderBody } from "hast-util-to-html";

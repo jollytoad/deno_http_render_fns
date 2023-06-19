@@ -1,82 +1,27 @@
 // deno-lint-ignore-file no-explicit-any
-import voidElements from "./void-elements.ts";
+import { streamComponent } from "./_stream_component.ts";
+import { streamElement } from "./_stream_element.ts";
+import { streamFragment } from "./_stream_fragment.ts";
+import { streamUnknown } from "./_stream_unknown.ts";
+import { isValidTag } from "./_util.ts";
+import type { Promisable, StreamableNode } from "./types.ts";
 
 // IMPORTANT: This is UNSAFE experimental code, do not use in production.
 
-export function* jsx(type: any, props: any): Iterable<string> {
+export function jsx(type: any, props: any): AsyncIterable<string> {
   // console.group(type);
 
   if (typeof type === "function") {
-    yield* type(props);
+    return streamComponent(type, props);
+  } else if (type === null) {
+    return streamFragment(props.children);
+  } else if (isValidTag(type)) {
+    return streamElement(type, props);
   } else {
-    const { children, ...attrs } = props && typeof props === "object"
-      ? props
-      : {} as any;
-
-    if (type === null) {
-      yield* ch(children);
-    } else if (isValidTag(type)) {
-      yield "<";
-      yield type;
-      for (const [name, value] of Object.entries(attrs)) {
-        if (isValidAttr(name) && value !== false) {
-          yield " ";
-          yield name;
-
-          if (value !== true) {
-            yield '="';
-            yield encodeValue(value);
-            yield '"';
-          }
-        }
-      }
-
-      if (voidElements.has(type)) {
-        // Although self-closing tags are ignored in HTML5, they are required in XML/XHTML/SVG,
-        // and it does no harm adding them, and makes void elements more obvious when debugging output.
-        yield "/>";
-      } else {
-        yield ">";
-
-        yield* ch(children);
-
-        yield "</";
-        yield type;
-        yield ">";
-      }
-    }
+    return streamUnknown(type);
   }
 
   // console.groupEnd();
-}
-
-function isValidTag(tag: string): boolean {
-  return /^[a-zA-Z][a-zA-Z0-9\-]*$/.test(tag);
-}
-
-function isValidAttr(name: string): boolean {
-  return /^[a-zA-Z][a-zA-Z0-9\-]*$/.test(name);
-}
-
-function encodeValue(value: unknown): string {
-  return String(value)
-    .replace(/&/g, "&amp;")
-    .replace(/'/g, "&apos;")
-    .replace(/"/g, "&quot;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;");
-}
-
-function* ch(children: any): Iterable<string> {
-  if (typeof children === "boolean" || typeof children === "number") {
-    yield String(children);
-  } else if (typeof children === "string") {
-    yield children;
-  } else if (typeof children?.[Symbol.iterator] === "function") {
-    for (const child of children) {
-      yield* ch(child);
-    }
-  }
 }
 
 export const jsxs = jsx;
@@ -85,7 +30,7 @@ export const Fragment = null;
 
 // deno-lint-ignore no-namespace
 export namespace JSX {
-  export type Element = Iterable<string>;
+  export type Element = Promisable<StreamableNode>;
 
   export interface IntrinsicAttributes {
     key?: any;

@@ -1,1 +1,1 @@
-export { renderToString } from "preact-render-to-string";
+export { renderToString as renderBody } from "preact-render-to-string";
