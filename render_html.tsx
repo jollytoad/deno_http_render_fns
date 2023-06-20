@@ -39,7 +39,7 @@ export function renderHTML<P extends {}>(
               await new Promise((resolve) => setTimeout(resolve, streamDelay));
             }
           }
-        }
+        },
       });
     } else {
       bodyInit = new Blob([
@@ -63,7 +63,8 @@ export function renderHTML<P extends {}>(
 }
 
 function isStream(bodyInit: BodyInit): bodyInit is ReadableStream<Uint8Array> {
-  return !!bodyInit && typeof bodyInit === 'object' && 'getReader' in bodyInit && typeof bodyInit.getReader ===  'function';
+  return !!bodyInit && typeof bodyInit === "object" &&
+    "getReader" in bodyInit && typeof bodyInit.getReader === "function";
 }
 
 function isData(bodyInit: BodyInit): bodyInit is FormData | URLSearchParams {

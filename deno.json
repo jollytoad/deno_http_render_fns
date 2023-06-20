@@ -4,7 +4,9 @@
     "jsxImportSource": "$jsx"
   },
   "tasks": {
-    "demo": "deno run --allow-net --import-map import_map_jsx_preact.json --watch demo/serve.tsx",
+    "demo:preact": "deno run --allow-net --import-map import_map_jsx_preact.json --watch demo/serve.tsx",
+    "demo:hast": "deno run --allow-net --import-map import_map_jsx_hast.json --watch demo/serve.tsx",
+    "demo:stream": "deno run --allow-net --import-map import_map_jsx_stream.json --watch demo/serve.tsx",
     "check:preact": "deno check --import-map import_map_jsx_preact.json render_html.tsx",
     "check:hast": "deno check --import-map import_map_jsx_hast.json render_html.tsx",
     "check:stream": "deno check --import-map import_map_jsx_stream.json render_html.tsx",

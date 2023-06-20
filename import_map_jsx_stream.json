@@ -1,6 +1,6 @@
 {
   "imports": {
-    "$jsx/": "./jsx_stream/",
-    "$jsx/jsx-runtime": "./jsx_stream/jsx-runtime.ts"
+    "$jsx/": "https://deno.land/x/jsx_stream@v0.0.2/",
+    "$jsx/jsx-runtime": "https://deno.land/x/jsx_stream@v0.0.2/jsx-runtime.ts"
   }
 }

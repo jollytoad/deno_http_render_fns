@@ -35,10 +35,13 @@ function asHomePageProps(req: Request, match: URLPatternResult): HomePageProps {
 }
 ```
 
-See the [demo](./demo/serve.tsx) for a full example, which you can also run:
+See the [demo](./demo/serve.tsx) for a full example, which you can also run
+using a choice of JSX framework:
 
 ```sh
-deno task demo
+deno task demo:preact
+deno task demo:hast
+deno task demo:stream
 ```
 
 ### renderJSON
@@ -66,7 +69,7 @@ The choice of JSX runtime and serialization is determined via your import map.
 - `"$jsx/serialize.ts"` - module that perform serialization of the JSX runtime
   nodes
 - `"$jsx/types.ts"` - provides a `ComponentType` type
-- `"$jsx/runtime"` - the regular JSX runtime module
+- `"$jsx/jsx-runtime"` - the regular JSX runtime module
 
 Your `deno.json` must also be configure to make use of the runtime:
 
@@ -101,9 +104,9 @@ to support this:
     "$jsx/": "https://deno.land/x/http_render_fns/jsx-preact/",
     "$jsx/jsx-runtime": "https://deno.land/x/http_render_fns/jsx-preact/jsx-runtime.ts",
 
-    "preact": "https://esm.sh/preact@10.13.1",
-    "preact/": "https://esm.sh/*preact@10.13.1/",
-    "preact-render-to-string": "https://esm.sh/*preact-render-to-string@5.2.6"
+    "preact": "https://esm.sh/preact@10.15.1",
+    "preact/": "https://esm.sh/*preact@10.15.1/",
+    "preact-render-to-string": "https://esm.sh/*preact-render-to-string@6.1.0"
   }
 }
 ```
@@ -131,22 +134,21 @@ to support this:
 }
 ```
 
-#### Experimental Minimal Streaming
+#### Experimental Async Streaming
 
 **NOT FOR PRODUCTION USE**
 
 This is an **experimental** JSX runtime that renders directly to a stream of
-strings.
+strings. It also supports asynchronous components.
 
-I don't recommend it atm, it's actually slower than both preact and hast above.
-
-This requires no other dependencies, just the jsx mappings:
+This has been moved into it's own [module](https://deno.land/x/jsx_stream), and
+just requires the jsx mappings:
 
 ```json
 {
   "imports": {
-    "$jsx/": "https://deno.land/x/http_render_fns/jsx-stream/",
-    "$jsx/jsx-runtime": "https://deno.land/x/http_render_fns/jsx-stream/jsx-runtime.ts"
+    "$jsx/": "https://deno.land/x/jsx_stream@v0.0.2/",
+    "$jsx/jsx-runtime": "https://deno.land/x/jsx_stream@v0.0.2/jsx-runtime.ts"
   }
 }
 ```
