@@ -1,5 +1,5 @@
 import { renderBody } from "$jsx/serialize.ts";
-import type { ComponentType } from "$jsx/types.ts";
+import type { ComponentType, RenderOptions } from "$jsx/types.ts";
 import { ok } from "./response.ts";
 
 const DOCTYPE = "<!DOCTYPE html>\n";
@@ -11,13 +11,14 @@ let streamDelay = 0;
 export function renderHTML<P extends {}>(
   Component: ComponentType<P>,
   headers?: Record<string, string>,
+  options?: RenderOptions,
 ) {
   return async (_req: Request, props: P): Promise<Response> => {
     const start = performance.now();
 
     const vnode = <Component {...props} />;
 
-    let bodyInit: BodyInit = await renderBody(vnode);
+    let bodyInit: BodyInit = await renderBody(vnode, options);
 
     if (isData(bodyInit)) {
       return ok(bodyInit, headers);
