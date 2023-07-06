@@ -1,14 +1,7 @@
-import {
-  byMethod,
-  byPattern,
-  handle,
-  mapData,
-  renderHTML,
-  serve,
-} from "./deps.ts";
+import { byMethod, byPattern, handle, mapData, renderHTML } from "./deps.ts";
 
-await serve(
-  handle([
+Deno.serve({
+  handler: handle([
     byPattern(
       ["/", "/:path*"],
       byMethod({
@@ -16,10 +9,8 @@ await serve(
       }),
     ),
   ]),
-  {
-    port: 3456,
-  },
-);
+  port: 3456,
+});
 
 interface HomePageProps {
   baseURL: string;

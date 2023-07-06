@@ -147,8 +147,8 @@ just requires the jsx mappings:
 ```json
 {
   "imports": {
-    "$jsx/": "https://deno.land/x/jsx_stream@v0.0.4/",
-    "$jsx/jsx-runtime": "https://deno.land/x/jsx_stream@v0.0.4/jsx-runtime.ts"
+    "$jsx/": "https://deno.land/x/jsx_stream@v0.0.10/",
+    "$jsx/jsx-runtime": "https://deno.land/x/jsx_stream@v0.0.10/jsx-runtime.ts"
   }
 }
 ```
