@@ -1,6 +1,5 @@
 import { renderBody } from "$jsx/serialize.ts";
 import type { ComponentType, RenderOptions } from "$jsx/types.ts";
-import { ok } from "./response.ts";
 
 const DOCTYPE = "<!DOCTYPE html>\n";
 const ENCODED_DOCTYPE = new TextEncoder().encode(DOCTYPE);
@@ -21,7 +20,11 @@ export function renderHTML<P extends {}>(
     let bodyInit: BodyInit = await renderBody(vnode, options);
 
     if (isData(bodyInit)) {
-      return ok(bodyInit, headers);
+      return new Response(bodyInit, {
+        status: 200,
+        statusText: "OK",
+        headers
+      });
     } else if (isStream(bodyInit)) {
       const reader = bodyInit.getReader();
 
@@ -51,9 +54,13 @@ export function renderHTML<P extends {}>(
       logTiming("Blob");
     }
 
-    return ok(bodyInit, {
-      "Content-Type": "text/html; charset=utf-8",
-      ...headers,
+    return new Response(bodyInit, {
+      status: 200,
+      statusText: "OK",
+      headers: {
+        "Content-Type": "text/html; charset=utf-8",
+        ...headers,
+      }
     });
 
     function logTiming(note?: string) {
