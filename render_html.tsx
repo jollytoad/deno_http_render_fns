@@ -9,7 +9,7 @@ let streamDelay = 0;
 // deno-lint-ignore ban-types
 export function renderHTML<P extends {}>(
   Component: ComponentType<P>,
-  headers?: Record<string, string>,
+  headers?: HeadersInit,
   options?: RenderOptions,
 ) {
   return async (_req: Request, props: P): Promise<Response> => {
@@ -54,13 +54,15 @@ export function renderHTML<P extends {}>(
       logTiming("Blob");
     }
 
+    const headersWithType = new Headers(headers);
+    if (!headersWithType.has("Content-Type")) {
+      headersWithType.set("Content-Type", "text/html; charset=utf-8");
+    }
+
     return new Response(bodyInit, {
       status: 200,
       statusText: "OK",
-      headers: {
-        "Content-Type": "text/html; charset=utf-8",
-        ...headers,
-      }
+      headers: headersWithType
     });
 
     function logTiming(note?: string) {
