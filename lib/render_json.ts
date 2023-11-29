@@ -8,6 +8,6 @@ export function renderJSON() {
       statusText: "OK",
       headers: {
         "Content-Type": "application/json",
-      }
+      },
     });
 }

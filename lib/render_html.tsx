@@ -23,7 +23,7 @@ export function renderHTML<P extends {}>(
       return new Response(bodyInit, {
         status: 200,
         statusText: "OK",
-        headers
+        headers,
       });
     } else if (isStream(bodyInit)) {
       const reader = bodyInit.getReader();
@@ -62,7 +62,7 @@ export function renderHTML<P extends {}>(
     return new Response(bodyInit, {
       status: 200,
       statusText: "OK",
-      headers: headersWithType
+      headers: headersWithType,
     });
 
     function logTiming(note?: string) {
