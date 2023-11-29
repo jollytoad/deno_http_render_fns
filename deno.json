@@ -9,11 +9,11 @@
     "demo:hast": "deno run --allow-net --import-map import_map_jsx_hast.json --watch demo/serve.tsx",
     "demo:stream": "deno run --allow-net --import-map import_map_jsx_stream.json --watch demo/serve.tsx",
     "demo:stream_sw": "deno run --allow-net --import-map import_map_jsx_stream_sw.json --watch demo/serve.tsx",
-    "check:preact": "deno check --import-map import_map_jsx_preact.json render_html.tsx",
-    "check:hast": "deno check --import-map import_map_jsx_hast.json render_html.tsx",
-    "check:stream": "deno check --import-map import_map_jsx_stream.json render_html.tsx",
-    "check:stream_sw": "deno check --import-map import_map_jsx_stream_sw.json render_html.tsx",
-    "check:other": "deno check render_json.ts",
+    "check:preact": "deno check --import-map import_map_jsx_preact.json lib/render_html.tsx",
+    "check:hast": "deno check --import-map import_map_jsx_hast.json lib/render_html.tsx",
+    "check:stream": "deno check --import-map import_map_jsx_stream.json lib/render_html.tsx",
+    "check:stream_sw": "deno check --import-map import_map_jsx_stream_sw.json lib/render_html.tsx",
+    "check:other": "deno check lib/render_json.ts",
     "check": "deno task check:other; deno task check:preact; deno task check:hast; deno task check:stream; deno task check:stream_sw"
   }
 }

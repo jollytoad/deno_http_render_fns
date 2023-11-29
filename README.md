@@ -1,8 +1,4 @@
-# deno_http_render_fns
-
-[![deno doc](https://doc.deno.land/badge.svg)](https://doc.deno.land/https://deno.land/x/http_render_fns/mod.ts)
-
-NOTE: This is still fairly experimental.
+# HTTP Rendering Functions
 
 A collection of functions for rendering documents from a HTTP server, designed
 to complement `http_fns`, but can be used with other routers.
@@ -17,7 +13,7 @@ They are intended to be used with [http_fns](https://deno.land/x/http_fns)
 functions.
 
 ```ts
-serve(
+Deno.serve(
   handle([
     byPattern(
       ["/", "/:path*"],
@@ -89,8 +85,6 @@ We provide three flavours of JSX framework here:
 
 #### Preact
 
-This is the recommended framework at present.
-
 Makes use of [Preact](https://preactjs.com/) JSX runtime to build a vdom, and
 [preact-render-to-string](https://github.com/preactjs/preact-render-to-string)
 to serialize to HTML.
@@ -134,11 +128,9 @@ to support this:
 }
 ```
 
-#### Experimental Async Streaming
+#### Async Streaming
 
-**NOT FOR PRODUCTION USE**
-
-This is an **experimental** JSX runtime that renders directly to a stream of
+This is a JSX runtime that renders directly to a stream of
 strings. It also supports asynchronous components.
 
 This has been moved into it's own [module](https://deno.land/x/jsx_stream), and
